@@ -1,0 +1,44 @@
+.searchbar{
+    width: auto;
+    height: 80px;
+    background-color: #ed8a24c2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  
+}
+.button{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    border: none;
+    padding: 8px 20px;
+    background-color: lavender;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.form{
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    width: 40%;
+}
+.icon{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px; 
+    left: 5px;
+}
+.input{
+    display: inline-block;
+    width: 100%;
+    font-size: 20px;
+    border: 0;
+    outline: none;
+    padding: 8px 30px;
+    background-color: transparent;
+    border-bottom: 1px solid #00000078;
+}

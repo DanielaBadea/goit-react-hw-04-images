@@ -1,0 +1,13 @@
+.scroll-down-button{
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+
+}
+.iconScroll{
+    width: 40px;
+    height: 40px;
+    fill:orange;
+}
