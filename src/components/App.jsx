@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SearchBar from "./Searchbar/Searchbar";
 import Button from "./ButtonLoadMore/Button";
 import { config } from "data/config";
@@ -17,7 +17,8 @@ export function App() {
   const [modalImage, setModalImage] = useState('');
   const [isMesaje, setIsMesaje] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchPerformed, setSearchPerformed] = useState(false); // New state to track if a search has been performed
+  const galleryRef = useRef(null); // Ref for gallery component
 
   useEffect(() => {
     if (searchPerformed) {
@@ -31,7 +32,7 @@ export function App() {
           const data = await response.json();
           setGallery(prevGallery => [...prevGallery, ...data.hits]);
           setIsLoading(false);
-          setIsScroll(true);
+          setIsScroll(true); // Setează isScroll la true pentru a face automat scroll
         } catch (error) {
           console.error('Error fetching gallery:', error);
           setIsLoading(false);
@@ -58,7 +59,7 @@ export function App() {
       setPage(1);
       setGallery([]);
       setIsMesaje(false);
-      setSearchPerformed(true);
+      setSearchPerformed(true); // Set searchPerformed to true when a search is performed
     }
 
     ev.target.reset();
@@ -66,6 +67,10 @@ export function App() {
 
   const handlerLoadMore = () => {
     setPage(prevPage => prevPage + 1);
+    // Scroll to the gallery component when 'Add More' is clicked
+    if (galleryRef.current) {
+      galleryRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
   };
 
   const openModal = (image) => {
@@ -84,7 +89,7 @@ export function App() {
       {isMesaje && <Messaje />}
       {searchPerformed && (
         <>
-          {isLoading ? <Loader /> : <ImageGallery images={gallery} openModal={openModal} />}
+          {isLoading ? <Loader /> : <ImageGallery ref={galleryRef} images={gallery} openModal={openModal} />}
           {gallery.length > 0 && !isLoading && <Button onLoadMore={handlerLoadMore} />}
           {isOpenModal && <Modal closeModal={closeModal} image={modalImage} />}
           {isScroll && <ScrollButton />}
@@ -92,4 +97,4 @@ export function App() {
       )}
     </>
   );
-};
+}
